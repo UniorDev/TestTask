@@ -1,27 +1,67 @@
-﻿namespace DataBaseLibrary
+﻿using System.Collections.Generic;
+
+namespace DataBaseLibrary
 {
-    public class DataBase
+    public abstract class DataBase
     {
-        public enum Dimension
+        public static void Add<T>(ref List<Container<T>> dataBase, Container<T> container, params Container<T>[] containers) where T : struct
         {
-            One,
-            Two,
-            Three
+            dataBase?.Add(container);
+            dataBase?.AddRange(containers);
         }
 
-        public DataBase(int containers, int matrics, int lenght, int values, Dimension d)
+        public static List<Container<T>> Create<T>() where T : struct
         {
-
+            return new List<Container<T>>();
         }
 
-        public DataBase()
+        public static List<Container<T>> Create<T>(int conteinersCount, int matricsCount, T[] points) where T : struct
         {
+            var containers = new List<Container<T>>();
 
+            for ( var i = 0; i < conteinersCount; i++ )
+            {
+                containers.Add(new Container<T>(matricsCount, points));
+            }
+
+            return containers;
         }
 
-        public void A()
+        public static List<Container<T>> Create<T>(int conteinersCount, int matricsCount, int positionsCount) where T : struct
         {
-            var db = new DataBase(1, 1, 1, 1, Dimension.One);
+            var containers = new List<Container<T>>();
+
+            for ( var i = 0; i < conteinersCount; i++ )
+            {
+                containers.Add(new Container<T>(matricsCount, positionsCount));
+            }
+
+            return containers;
         }
+
+        public static List<Container<T>> Create<T>(int conteinersCount, int matricsCount) where T : struct
+        {
+            var containers = new List<Container<T>>();
+
+            for ( var i = 0; i < conteinersCount; i++ )
+            {
+                containers.Add(new Container<T>(matricsCount));
+            }
+
+            return containers;
+        }
+
+        public static List<Container<T>> Create<T>(int conteinersCount) where T : struct
+        {
+            var containers = new List<Container<T>>();
+
+            for ( var i = 0; i < conteinersCount; i++ )
+            {
+                containers.Add(new Container<T>());
+            }
+
+            return containers;
+        }
+
     }
 }

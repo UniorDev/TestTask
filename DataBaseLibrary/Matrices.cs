@@ -7,22 +7,44 @@ namespace DataBaseLibrary
         void Add(T value);
     }
 
+    public enum Dimension
+    {
+        One,
+        Two,
+        Three
+    }
+
     public class OneDimensionalMatrix<T> : IMatrix<T> where T : struct
     {
+        private int _xLength;
+
         private readonly List<IPosition<T>> _positions;
 
         public T this[int x] => _positions[0].Value;
 
-        public OneDimensionalMatrix(params T[] values)
+        #region Ctors
+
+        public OneDimensionalMatrix(int xLength, params T[] points)
         {
             _positions = new List<IPosition<T>>();
 
-            foreach ( var value in values )
+            foreach ( var t in points )
             {
-                _positions.Add(new Position<T>(value));
+                _positions.Add(new Position<T>(t));
             }
-
         }
+
+        public OneDimensionalMatrix(int positionsCount)
+        {
+            _positions = new List<IPosition<T>>();
+
+            for ( var i = 0; i < positionsCount; i++ )
+            {
+                _positions.Add(new Position<T>(default(T)));
+            }
+        }
+
+        #endregion
 
         public void Add(T value)
         {
@@ -36,7 +58,7 @@ namespace DataBaseLibrary
 
         public T this[int x, int y] => _positions[0].Value;
 
-        public TwoDimensionalMatrix(params T[] values)
+        public TwoDimensionalMatrix(int xLength, int yLength, params T[] values)
         {
             _positions = new List<IPosition<T>>();
 
@@ -53,13 +75,13 @@ namespace DataBaseLibrary
         }
     }
 
-    public class TreeDimensionalMatrix<T> : IMatrix<T> where T : struct
+    public class ThreeDimensionalMatrix<T> : IMatrix<T> where T : struct
     {
         private readonly List<IPosition<T>> _positions;
 
         public T this[int x, int y, int z] => _positions[0].Value;
 
-        public TreeDimensionalMatrix(params T[] values)
+        public ThreeDimensionalMatrix(int xLength, int yLength, int zLenght, params T[] values)
         {
             _positions = new List<IPosition<T>>();
 
