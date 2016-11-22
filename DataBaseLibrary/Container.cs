@@ -4,15 +4,15 @@ namespace DataBaseLibrary
 {
     public class Container<T> where T : struct
     {
-        private readonly List<IMatrix<T>> _matrices;
+        private readonly List<Matrix<T>> _matrices;
 
-        public IMatrix<T> this[int x] => _matrices[0];
+        public Matrix<T> this[int x] => _matrices[x];
 
         #region Ctors
 
-        public Container(params IMatrix<T>[] matrices)
+        public Container(params Matrix<T>[] matrices)
         {
-            _matrices = new List<IMatrix<T>>();
+            _matrices = new List<Matrix<T>>();
 
             foreach ( var matrix in matrices )
             {
@@ -20,39 +20,29 @@ namespace DataBaseLibrary
             }
         }
 
-        public Container(int matricsCount, T[] points)
+        public Container(int matricsCount, Position<T>[] positions)
         {
-            _matrices = new List<IMatrix<T>>();
+            _matrices = new List<Matrix<T>>();
 
             for ( var i = 0; i < matricsCount; i++ )
             {
-                _matrices.Add(new OneDimensionalMatrix<T>(points));
+                _matrices.Add(new Matrix<T>(positions));
             }
         }
 
         public Container(int matricsCount, int positionsCount)
         {
-            _matrices = new List<IMatrix<T>>();
+            _matrices = new List<Matrix<T>>();
 
             for ( var i = 0; i < matricsCount; i++ )
             {
-                _matrices.Add(new OneDimensionalMatrix<T>(positionsCount));
-            }
-        }
-
-        public Container(int matricsCount)
-        {
-            _matrices = new List<IMatrix<T>>();
-
-            for ( var i = 0; i < matricsCount; i++ )
-            {
-                _matrices.Add(new OneDimensionalMatrix<T>());
+                _matrices.Add(new Matrix<T>(positionsCount));
             }
         }
 
         #endregion
 
-        public void AddMatrix(IMatrix<T> matrix)
+        public void AddMatrix(Matrix<T> matrix)
         {
             _matrices.Add(matrix);
         }

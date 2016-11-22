@@ -4,7 +4,7 @@ namespace DataBaseLibrary
 {
     public abstract class DataBase
     {
-        public static void Add<T>(ref List<Container<T>> dataBase, Container<T> container, params Container<T>[] containers) where T : struct
+        public static void AddContainers<T>(ref List<Container<T>> dataBase, Container<T> container, params Container<T>[] containers) where T : struct
         {
             dataBase?.Add(container);
             dataBase?.AddRange(containers);
@@ -15,7 +15,7 @@ namespace DataBaseLibrary
             return new List<Container<T>>();
         }
 
-        public static List<Container<T>> Create<T>(int conteinersCount, int matricsCount, T[] points) where T : struct
+        public static List<Container<T>> Create<T>(int conteinersCount, int matricsCount, Position<T>[] positions) where T : struct
         {
             var containers = new List<Container<T>>();
 
@@ -34,18 +34,6 @@ namespace DataBaseLibrary
             for ( var i = 0; i < conteinersCount; i++ )
             {
                 containers.Add(new Container<T>(matricsCount, positionsCount));
-            }
-
-            return containers;
-        }
-
-        public static List<Container<T>> Create<T>(int conteinersCount, int matricsCount) where T : struct
-        {
-            var containers = new List<Container<T>>();
-
-            for ( var i = 0; i < conteinersCount; i++ )
-            {
-                containers.Add(new Container<T>(matricsCount));
             }
 
             return containers;

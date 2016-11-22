@@ -42,7 +42,7 @@
     <Compile Include="Container.cs" />
     <Compile Include="CustomExceptions.cs" />
     <Compile Include="DataBase.cs" />
-    <Compile Include="Matrices.cs" />
+    <Compile Include="Matrix.cs" />
     <Compile Include="Points.cs" />
     <Compile Include="Position.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
