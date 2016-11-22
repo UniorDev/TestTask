@@ -13,17 +13,13 @@ namespace DataBaseLibrary
 
     public class Matrix<T> : IEnumerable<T> where T : struct
     {
-        private readonly int _xLength, _yLength = 1, _zLength = 1;
+        private readonly IPoint _pointLength;
         private readonly Dimension _dimension;
         private readonly List<IPosition<T>> _positions;
         private readonly long _lengthEnd;
 
-        public Matrix(Dimension dimension, int xLength, int yLength = 1, int zLength = 1, params T[] points)
+        public Matrix(Dimension dimension, IPoint pointLength, params T[] points)
         {
-            _xLength = xLength;
-            _yLength = yLength;
-            _zLength = zLength;
-            _lengthEnd = xLength * yLength * zLength;
             _dimension = dimension;
             _positions = new List<IPosition<T>>();
 
@@ -31,13 +27,31 @@ namespace DataBaseLibrary
             {
                 _positions.Add(new Position<T>(point));
             }
+
+            if ( pointLength is D1Point )
+            {
+                _lengthEnd = _pointLength.X;
+                _pointLength = new D1Point(_pointLength.X);
+            }
+            else if ( pointLength is D2Point )
+            {
+                var d2Point = ( D2Point )pointLength;
+                _lengthEnd = d2Point.X * d2Point.Y;
+                _pointLength = new D2Point(d2Point.X, d2Point.Y);
+            }
+            else
+            {
+                var d3Point = ( D3Point )pointLength;
+                _lengthEnd = d3Point.X * d3Point.Y * d3Point.Z;
+                _pointLength = new D3Point(d3Point.X, d3Point.Y, d3Point.Z);
+            }
         }
 
         public Matrix(int positionsCount)
         {
             _positions = new List<IPosition<T>>();
             _lengthEnd = positionsCount;
-            _xLength = positionsCount;
+            _pointLength = new D1Point(positionsCount);
         }
 
         public Matrix(Position<T>[] positions)
@@ -50,7 +64,7 @@ namespace DataBaseLibrary
             }
 
             _lengthEnd = positions.Length;
-            _xLength = positions.Length;
+            _pointLength = new D1Point(positions.Length);
         }
 
         public void Add(T value)
@@ -70,7 +84,7 @@ namespace DataBaseLibrary
             }
         }
 
-        public T this[int x, int y = 0, int z = 0]
+        public T this[IPoint point]
         {
             get
             {
@@ -78,16 +92,18 @@ namespace DataBaseLibrary
                 {
                     case Dimension.One:
                         {
-                            if ( x >= _xLength ) throw new IndexOutOfDataBaseBoundsException(nameof(x), Convert.ToString(_xLength));
-                            if ( x >= _positions.Count ) return default(T);
-                            return _positions[x].Value;
+                            if ( point.X >= _pointLength.X ) throw new IndexOutOfDataBaseBoundsException(nameof(point.X), Convert.ToString(_pointLength.X));
+                            if ( point.X >= _positions.Count ) return default(T);
+                            return _positions[point.X].Value;
                         }
                     case Dimension.Two:
                         {
-                            if ( x >= _xLength ) throw new IndexOutOfDataBaseBoundsException(nameof(x), Convert.ToString(_xLength));
-                            if ( y >= _yLength ) throw new IndexOutOfDataBaseBoundsException(nameof(y), Convert.ToString(_yLength));
+                            var d2PointLenght = ( D2Point )_pointLength;
+                            var d2Point = ( D2Point )point;
+                            if ( d2Point.X >= d2PointLenght.X ) throw new IndexOutOfDataBaseBoundsException(nameof(d2Point.X), Convert.ToString(d2PointLenght.X));
+                            if ( d2Point.Y >= d2PointLenght.Y ) throw new IndexOutOfDataBaseBoundsException(nameof(d2Point.Y), Convert.ToString(d2PointLenght.Y));
 
-                            var index = y * _xLength + x;
+                            var index = d2Point.Y * d2PointLenght.X + d2Point.X;
 
                             if ( index >= _positions.Count ) return default(T);
 
@@ -95,11 +111,13 @@ namespace DataBaseLibrary
                         }
                     case Dimension.Three:
                         {
-                            if ( x >= _xLength ) throw new IndexOutOfDataBaseBoundsException(nameof(x), Convert.ToString(_xLength));
-                            if ( y >= _yLength ) throw new IndexOutOfDataBaseBoundsException(nameof(y), Convert.ToString(_yLength));
-                            if ( z >= _zLength ) throw new IndexOutOfDataBaseBoundsException(nameof(z), Convert.ToString(_zLength));
+                            var d3PointLenght = ( D3Point )_pointLength;
+                            var d3Point = ( D3Point )point;
+                            if ( d3Point.X >= d3PointLenght.X ) throw new IndexOutOfDataBaseBoundsException(nameof(d3Point.X), Convert.ToString(d3PointLenght.X));
+                            if ( d3Point.Y >= d3PointLenght.Y ) throw new IndexOutOfDataBaseBoundsException(nameof(d3Point.Y), Convert.ToString(d3PointLenght.Y));
+                            if ( d3Point.Z >= d3PointLenght.Z ) throw new IndexOutOfDataBaseBoundsException(nameof(d3Point.Z), Convert.ToString(d3PointLenght.Z));
 
-                            var index = z * _yLength * _xLength + y * _xLength + x;
+                            var index = d3Point.Z * d3PointLenght.Y * d3PointLenght.X + d3Point.Y * d3PointLenght.X + d3Point.X;
 
                             if ( index >= _positions.Count ) return default(T);
 
@@ -123,11 +141,13 @@ namespace DataBaseLibrary
                     }
                 case Dimension.Two:
                     {
-                        for ( var i = 0; i < _yLength; i++ )
+                        var d2PointLenght = ( D2Point )_pointLength;
+
+                        for ( var i = 0; i < d2PointLenght.Y; i++ )
                         {
-                            for ( var j = 0; j < _xLength; j++ )
+                            for ( var j = 0; j < d2PointLenght.X; j++ )
                             {
-                                var index = i * _xLength + j;
+                                var index = i * d2PointLenght.X + j;
                                 Console.Write(Convert.ToString(_positions[index]) + ' ');
                             }
                             Console.WriteLine();
@@ -137,13 +157,15 @@ namespace DataBaseLibrary
 
                 case Dimension.Three:
                     {
-                        for ( var i = 0; i < _yLength; i++ )
+                        var d3PointLenght = ( D3Point )_pointLength;
+
+                        for ( var i = 0; i < d3PointLenght.Y; i++ )
                         {
-                            for ( var j = 0; j < _zLength; j++ )
+                            for ( var j = 0; j < d3PointLenght.Z; j++ )
                             {
-                                for ( var k = 0; k < _xLength; k++ )
+                                for ( var k = 0; k < d3PointLenght.X; k++ )
                                 {
-                                    var index = ( i * _xLength + k ) * j;
+                                    var index = ( i * d3PointLenght.X + k ) * j;
                                     Console.Write(Convert.ToString(_positions[index]) + ' ');
                                 }
                                 Console.Write("         ");
