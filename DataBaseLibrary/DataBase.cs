@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace DataBaseLibrary
 {
@@ -21,7 +22,7 @@ namespace DataBaseLibrary
 
             for ( var i = 0; i < conteinersCount; i++ )
             {
-                containers.Add(new Container<T>(matricsCount, points));
+                containers.Add(new Container<T>(matricsCount, positions));
             }
 
             return containers;
@@ -51,5 +52,15 @@ namespace DataBaseLibrary
             return containers;
         }
 
+        public static void DisplayOnConsole<T>(List<Container<T>> containers) where T : struct
+        {
+            for ( var i = 0; i < containers.Count; i++ )
+            {
+                Console.WriteLine($"  {i}-Container:\n");
+                containers[i].DisplayOnConsole();
+            }
+
+            Console.WriteLine("------------------------------------------------------------------\n\n");
+        }
     }
 }

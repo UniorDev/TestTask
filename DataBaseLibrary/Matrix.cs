@@ -49,6 +49,7 @@ namespace DataBaseLibrary
 
         public Matrix(int positionsCount)
         {
+            _dimension = Dimension.One;
             _positions = new List<IPosition<T>>();
             _lengthEnd = positionsCount;
             _pointLength = new D1Point(positionsCount);
@@ -56,6 +57,7 @@ namespace DataBaseLibrary
 
         public Matrix(Position<T>[] positions)
         {
+            _dimension = Dimension.One;
             _positions = new List<IPosition<T>>();
 
             foreach ( var position in positions )
@@ -74,7 +76,7 @@ namespace DataBaseLibrary
             _positions.Add(new Position<T>(value));
         }
 
-        public void AddRange(T[] values)
+        public void AddRange(params T[] values)
         {
             foreach ( var value in values )
             {
@@ -135,6 +137,7 @@ namespace DataBaseLibrary
             {
                 case Dimension.One:
                     {
+                        Console.Write("          ");
                         foreach ( var position in _positions )
                             Console.Write(Convert.ToString(position.Value) + ' ');
                         break;
@@ -151,6 +154,7 @@ namespace DataBaseLibrary
                                 Console.Write(Convert.ToString(_positions[index]) + ' ');
                             }
                             Console.WriteLine();
+                            Console.Write("          ");
                         }
                         break;
                     }
@@ -171,6 +175,7 @@ namespace DataBaseLibrary
                                 Console.Write("         ");
                             }
                             Console.WriteLine();
+                            Console.Write("          ");
                         }
                         break;
                     }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace DataBaseLibrary
 {
@@ -47,6 +48,14 @@ namespace DataBaseLibrary
             _matrices.Add(matrix);
         }
 
-
+        public void DisplayOnConsole()
+        {
+            for ( var i = 0; i < _matrices.Count; i++ )
+            {
+                Console.WriteLine($"      {i}-Matrix:\n");
+                _matrices[i].DisplayOnConsole();
+                Console.WriteLine("\n\n");
+            }
+        }
     }
 }
