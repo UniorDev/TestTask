@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace DataBaseLibrary
 {
+    /// <summary>
+    /// Matrix dimension
+    /// </summary>
     public enum Dimension
     {
         One,
@@ -69,6 +72,10 @@ namespace DataBaseLibrary
             _pointLength = new D1Point(positions.Length);
         }
 
+        /// <summary>
+        /// Adds value right after previous 
+        /// </summary>
+        /// <param name="value">Should be positive</param>
         public void Add(T value)
         {
             if ( _positions.Count >= _lengthEnd ) throw new DataBaseOverFlowException();
@@ -76,6 +83,10 @@ namespace DataBaseLibrary
             _positions.Add(new Position<T>(value));
         }
 
+        /// <summary>
+        /// Adds range of values
+        /// </summary>
+        /// <param name="values">Should be positive</param>
         public void AddRange(params T[] values)
         {
             foreach ( var value in values )
@@ -131,6 +142,9 @@ namespace DataBaseLibrary
             }
         }
 
+        /// <summary>
+        /// Displays matrix on Console in what dimension you defined it
+        /// </summary>
         public void DisplayOnConsole()
         {
             switch ( _dimension )

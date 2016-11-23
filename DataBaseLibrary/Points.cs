@@ -1,10 +1,19 @@
 ﻿namespace DataBaseLibrary
 {
+    /// <summary>
+    /// Defines general behavior of point 
+    /// </summary>
     public interface IPoint
     {
+        /// <summary>
+        /// Axis
+        /// </summary>
         int X { get; }
     }
 
+    /// <summary>
+    /// One-dimensional point
+    /// </summary>
     public struct D1Point : IPoint
     {
         public int X { get; }
@@ -17,6 +26,9 @@
         }
     }
 
+    /// <summary>
+    /// Two-dimensional point
+    /// </summary>
     public struct D2Point : IPoint
     {
         public int X { get; }
@@ -31,6 +43,9 @@
         }
     }
 
+    /// <summary>
+    /// Three-dimensional point
+    /// </summary>
     public struct D3Point : IPoint
     {
         public int X { get; }

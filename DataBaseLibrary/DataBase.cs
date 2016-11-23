@@ -5,6 +5,13 @@ namespace DataBaseLibrary
 {
     public abstract class DataBase
     {
+        /// <summary>
+        /// Adds as many containers as you want
+        /// </summary>
+        /// <typeparam name="T">Numerical type</typeparam>
+        /// <param name="dataBase">Place where you wanna store containers</param>
+        /// <param name="container"></param>
+        /// <param name="containers"></param>
         public static void AddContainers<T>(ref List<Container<T>> dataBase, Container<T> container, params Container<T>[] containers) where T : struct
         {
             dataBase?.Add(container);
@@ -57,6 +64,11 @@ namespace DataBaseLibrary
             return containers;
         }
 
+        /// <summary>
+        /// Displays database
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="containers"></param>
         public static void DisplayOnConsole<T>(List<Container<T>> containers) where T : struct
         {
             for ( var i = 0; i < containers.Count; i++ )

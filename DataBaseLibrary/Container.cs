@@ -43,6 +43,12 @@ namespace DataBaseLibrary
 
         #endregion
 
+
+        /// <summary>
+        /// Adds as many as you want matrices
+        /// </summary>
+        /// <param name="matrix"></param>
+        /// <param name="matrices"></param>
         public void AddMatrices(Matrix<T> matrix, params Matrix<T>[] matrices)
         {
             _matrices.Add(matrix);
@@ -53,6 +59,9 @@ namespace DataBaseLibrary
             }
         }
 
+        /// <summary>
+        /// Displays container on console
+        /// </summary>
         public void DisplayOnConsole()
         {
             for ( var i = 0; i < _matrices.Count; i++ )
