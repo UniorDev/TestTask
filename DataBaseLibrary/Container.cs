@@ -43,16 +43,21 @@ namespace DataBaseLibrary
 
         #endregion
 
-        public void AddMatrix(Matrix<T> matrix)
+        public void AddMatrices(Matrix<T> matrix, params Matrix<T>[] matrices)
         {
             _matrices.Add(matrix);
+
+            foreach ( var m in matrices )
+            {
+                _matrices.Add(m);
+            }
         }
 
         public void DisplayOnConsole()
         {
             for ( var i = 0; i < _matrices.Count; i++ )
             {
-                Console.WriteLine($"      {i}-Matrix:\n");
+                Console.WriteLine($"    {i}-Matrix:\n");
                 _matrices[i].DisplayOnConsole();
                 Console.WriteLine("\n\n");
             }

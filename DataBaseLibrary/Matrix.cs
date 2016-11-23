@@ -30,8 +30,8 @@ namespace DataBaseLibrary
 
             if ( pointLength is D1Point )
             {
+                _pointLength = new D1Point(pointLength.X);
                 _lengthEnd = _pointLength.X;
-                _pointLength = new D1Point(_pointLength.X);
             }
             else if ( pointLength is D2Point )
             {
@@ -137,24 +137,35 @@ namespace DataBaseLibrary
             {
                 case Dimension.One:
                     {
-                        Console.Write("          ");
-                        foreach ( var position in _positions )
-                            Console.Write(Convert.ToString(position.Value) + ' ');
+                        Console.Write(string.Empty.PadRight(10, ' '));
+
+                        int i;
+
+                        for ( i = 0; i < _positions.Count; i++ )
+                            Console.Write(Convert.ToString(_positions[i].Value) + ' ');
+
+                        for ( ; i < _lengthEnd; i++ )
+                            Console.Write(Convert.ToString(default(T)) + ' ');
+
                         break;
                     }
                 case Dimension.Two:
                     {
                         var d2PointLenght = ( D2Point )_pointLength;
 
+                        Console.Write(string.Empty.PadRight(10, ' '));
                         for ( var i = 0; i < d2PointLenght.Y; i++ )
                         {
                             for ( var j = 0; j < d2PointLenght.X; j++ )
                             {
                                 var index = i * d2PointLenght.X + j;
-                                Console.Write(Convert.ToString(_positions[index]) + ' ');
+                                if ( index < _positions.Count )
+                                    Console.Write(Convert.ToString(_positions[index].Value) + ' ');
+                                else
+                                    Console.Write(Convert.ToString(default(T)) + ' ');
                             }
                             Console.WriteLine();
-                            Console.Write("          ");
+                            Console.Write(string.Empty.PadRight(10, ' '));
                         }
                         break;
                     }
@@ -163,19 +174,23 @@ namespace DataBaseLibrary
                     {
                         var d3PointLenght = ( D3Point )_pointLength;
 
-                        for ( var i = 0; i < d3PointLenght.Y; i++ )
+                        Console.Write(string.Empty.PadRight(10, ' '));
+                        for ( var y = 0; y < d3PointLenght.Y; y++ )
                         {
-                            for ( var j = 0; j < d3PointLenght.Z; j++ )
+                            for ( var z = 0; z < d3PointLenght.Z; z++ )
                             {
-                                for ( var k = 0; k < d3PointLenght.X; k++ )
+                                for ( var x = 0; x < d3PointLenght.X; x++ )
                                 {
-                                    var index = ( i * d3PointLenght.X + k ) * j;
-                                    Console.Write(Convert.ToString(_positions[index]) + ' ');
+                                    var index = ( z * d3PointLenght.Y * d3PointLenght.X ) + ( y * d3PointLenght.X ) + x;
+                                    if ( index < _positions.Count )
+                                        Console.Write(Convert.ToString(_positions[index].Value) + ' ');
+                                    else
+                                        Console.Write(Convert.ToString(default(T)) + ' ');
                                 }
-                                Console.Write("         ");
+                                Console.Write(string.Empty.PadRight(2, ' '));
                             }
                             Console.WriteLine();
-                            Console.Write("          ");
+                            Console.Write(string.Empty.PadRight(10, ' '));
                         }
                         break;
                     }

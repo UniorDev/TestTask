@@ -33,11 +33,13 @@ namespace DataBaseLibrary.Tests
         [Test]
         public void ShouldAcceptNumericalValue()
         {
-            IPosition<int> position;
+            IPosition<int> intPosition;
+            IPosition<double> doublePosition;
+            IPosition<decimal> decimalPosition;
 
-            Assert.DoesNotThrow(() => position = new Position<int>(5));
+            Assert.DoesNotThrow(() => intPosition = new Position<int>(5));
+            Assert.DoesNotThrow(() => doublePosition = new Position<double>(5.0));
+            Assert.DoesNotThrow(() => decimalPosition = new Position<decimal>(5m));
         }
-
-
     }
 }

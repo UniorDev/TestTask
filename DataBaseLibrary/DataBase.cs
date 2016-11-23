@@ -16,6 +16,11 @@ namespace DataBaseLibrary
             return new List<Container<T>>();
         }
 
+        public static List<Container<T>> Create<T>(params Container<T>[] containers) where T : struct
+        {
+            return new List<Container<T>>(containers);
+        }
+
         public static List<Container<T>> Create<T>(int conteinersCount, int matricsCount, Position<T>[] positions) where T : struct
         {
             var containers = new List<Container<T>>();
@@ -56,11 +61,11 @@ namespace DataBaseLibrary
         {
             for ( var i = 0; i < containers.Count; i++ )
             {
-                Console.WriteLine($"  {i}-Container:\n");
+                Console.WriteLine($" {i}-Container:\n");
                 containers[i].DisplayOnConsole();
             }
 
-            Console.WriteLine("------------------------------------------------------------------\n\n");
+            Console.WriteLine("\n\n".PadRight(40, '-'));
         }
     }
 }
