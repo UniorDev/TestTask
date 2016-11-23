@@ -25,4 +25,10 @@ namespace DataBaseLibrary
             return $"{name} index out of data base bounds. Should be equal or less than {bound}";
         }
     }
+
+    public class InvalidPointException : Exception
+    {
+        public InvalidPointException(string message = "Invalid point. It should be not less than 0.") : base(message)
+        { }
+    }
 }

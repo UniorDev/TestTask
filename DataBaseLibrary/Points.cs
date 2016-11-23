@@ -11,6 +11,8 @@
 
         public D1Point(int x)
         {
+            if ( x < 0 ) throw new InvalidPointException();
+
             X = x;
         }
     }
@@ -22,6 +24,8 @@
 
         public D2Point(int x, int y)
         {
+            if ( x < 0 || y < 0 ) throw new InvalidPointException();
+
             X = x;
             Y = y;
         }
@@ -35,6 +39,8 @@
 
         public D3Point(int x, int y, int z)
         {
+            if ( x < 0 || y < 0 || z < 0 ) throw new InvalidPointException();
+
             X = x;
             Y = y;
             Z = z;

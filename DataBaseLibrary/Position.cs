@@ -1,4 +1,6 @@
-﻿namespace DataBaseLibrary
+﻿using System;
+
+namespace DataBaseLibrary
 {
     public interface IPosition<out T> where T : struct
     {
@@ -12,7 +14,7 @@
         public Position(T value)
         {
             var typeOfValue = value.GetType();
-            if ( typeOfValue.IsEnum || typeOfValue == typeof(bool) )
+            if ( typeOfValue == typeof(bool) || typeOfValue == typeof(DateTime) || typeOfValue == typeof(char) )
                 throw new WrongValueTypeException();
 
             Value = value;
